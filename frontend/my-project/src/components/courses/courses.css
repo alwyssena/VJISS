@@ -1,0 +1,173 @@
+/* Courses Section */
+.courses-section {
+  padding: 24px 14px;
+  background-color: #f8fafc;
+}
+
+/* Grid Layout */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Course Card */
+.course-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+}
+
+/* Course Logo */
+.course-logo {
+  width: 100%;
+  height: 120px; /* reduced */
+  object-fit: contain;
+  border-radius: 8px;
+  background-color: #f1f5f9;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+/* Header */
+.course-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.course-header h3 {
+  font-size: 15px; /* reduced */
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* Level Badge */
+.level-badge {
+  padding: 3px 8px;
+  font-size: 10px; /* reduced */
+  border-radius: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Badge Colors */
+.level-badge.beginner {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.level-badge.intermediate {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.level-badge.advanced {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Meta Info */
+.course-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px; /* reduced */
+  color: #374151;
+  margin: 8px 0;
+  font-family: 'italic';
+}
+
+/* Description */
+.course-description {
+  font-size: 12.5px; /* reduced */
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  flex-grow: 1;
+}
+
+/* Actions */
+.course-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.enroll-btn,
+.details-btn {
+  flex: 1;
+  padding: 7px; /* reduced */
+  border-radius: 6px;
+  font-size: 12px; /* reduced */
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s ease;
+}
+
+/* Buttons */
+.enroll-btn {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+.enroll-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.details-btn {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+.details-btn:hover {
+  background-color: #d1d5db;
+}
+
+/* Loading & Error */
+.courses-section > div {
+  font-size: 14px;
+  text-align: center;
+  color: #374151;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .course-meta {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+
+.course-duration {
+  font-size: 12px;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.course-duration strong {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.duration-text {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7280;
+  letter-spacing: 0.5px;
+}

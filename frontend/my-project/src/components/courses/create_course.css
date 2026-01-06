@@ -1,0 +1,140 @@
+/* Page Wrapper */
+.course-form-container {
+  max-width: 820px;
+  margin: 40px auto;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Headings */
+.course-form-container h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #1f2937;
+}
+
+.course-form-container h3 {
+  margin: 20px 0 12px;
+  color: #2563eb;
+  font-size: 16px;
+}
+
+/* Form */
+.course-form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Inputs */
+.course-form-container input,
+.course-form-container textarea,
+.course-form-container select {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.course-form-container textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.course-form-container input:focus,
+.course-form-container textarea:focus,
+.course-form-container select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+/* File input */
+.course-form-container input[type="file"] {
+  padding: 6px;
+}
+
+/* Divider */
+.course-form-container hr {
+  border: none;
+  height: 1px;
+  background: #e5e7eb;
+  margin: 20px 0;
+}
+
+/* Syllabus Block */
+.syllabus-block {
+  background: #f9fafb;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+.btn-add {
+  width: fit-content;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  background: #e0e7ff;
+  color: #1e40af;
+  cursor: pointer;
+}
+
+.btn-add:hover {
+  background: #c7d2fe;
+}
+
+.btn-submit {
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-submit:hover {
+  background: #1d4ed8;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .course-form-container {
+    margin: 20px 12px;
+    padding: 18px;
+  }
+}
+
+
+.syllabus-row {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.remove-btn {
+  margin-top: 8px;
+  background-color: #e11d48;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background-color: #be123c;
+}

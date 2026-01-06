@@ -1,0 +1,77 @@
+/* ================================
+   DESKTOP NAV ITEMS (li)
+================================ */
+
+.nav-links li {
+  position: relative;
+  cursor: pointer;
+  padding: 6px 4px;
+  color: var(--dark);
+  transition: color 0.3s ease;
+}
+
+/* Hover & Focus */
+.nav-links li:hover,
+.nav-links li:focus-visible {
+  color: var(--primary);
+}
+
+/* Underline animation */
+.nav-links li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 3px;
+  background: var(--secondary);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.nav-links li:hover::after,
+.nav-links li:focus-visible::after {
+  width: 100%;
+}
+
+/* ================================
+   MOBILE MENU ITEMS (span)
+================================ */
+
+.mobile-menu span {
+  padding: 12px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--dark);
+}
+
+/* Hover & Focus */
+.mobile-menu span:hover,
+.mobile-menu span:focus-visible {
+  background: var(--light);
+  color: var(--primary);
+  padding-left: 20px;
+  outline: none;
+}
+
+/* ================================
+   LOGIN / LOGOUT BUTTON FIX
+================================ */
+
+.logout-btn {
+  cursor: pointer;
+}
+
+/* ================================
+   OPTIONAL: ACTIVE PAGE STYLE
+================================ */
+
+.nav-links li.active {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.nav-links li.active::after {
+  width: 100%;
+}
