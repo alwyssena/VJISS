@@ -7,7 +7,7 @@ import "./dashboard.css";
 
 
 const Dashboard = () => {
-  const { token, admin ,logout} = React.useContext(AuthContext);
+  const { token, role ,logout} = React.useContext(AuthContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLogin,setShowLogin]=useState(false);
   const [showAuthPopup, setShowAuthPopup] = useState(false);

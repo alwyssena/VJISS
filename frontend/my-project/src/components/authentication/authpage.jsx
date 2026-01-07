@@ -52,6 +52,8 @@ const PasswordInput = ({
 
 
 const AuthPage = () => {
+  const [otp, setOtp] = useState("");
+
   const navigate = useNavigate();
   const [isSignUpMode, setIsSignUpMode] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -60,10 +62,15 @@ const [forgotValue, setForgotValue] = useState("");
 const[newPassword,setnewPassword]=useState("")
 const [confirmPassword,setConfirmPassword]=useState("")
 const {login,logout} = React.useContext(AuthContext);
+
 const [otpSent, setOtpSent] = useState(false);
 const [checkingUser, setCheckingUser] = useState(false);
 
-const[otp,setotp]=useState("")
+const [signupOtpSent, setSignupOtpSent] = useState(false);
+
+
+
+
 
 const OTP_EXPIRY_SECONDS = 5 * 60; // 5 minutes
 
@@ -91,6 +98,45 @@ const timerRef = useRef(null);
 
 
 
+
+
+const sendSignupOtp = async () => {
+  if (!formData.email) {
+    alert("Please enter email");
+    return;
+  }
+
+  try {
+    await axios.post("http://127.0.0.1:8000/VJISS/send-otp/", {
+      email: formData.email,
+    });
+
+    alert("OTP sent successfully");
+
+    setSignupOtpSent(true);
+    setOtp("");
+    startOtpCountdown();
+  } catch (err) {
+    alert("Failed to send OTP");
+  }
+};
+
+
+
+
+// const sendForgotOtp = async () => {
+//   if (!forgotValue) {
+//     alert("Enter email or phone");
+//     return;
+//   }
+//   // call forgot OTP API
+//   startOtpCountdown();
+// };
+
+
+
+
+
 const startOtpCountdown = () => {
   clearInterval(timerRef.current);
 
@@ -113,34 +159,32 @@ const startOtpCountdown = () => {
 
 
 
+
 const sendOtp = async () => {
   if (!forgotValue) {
-    alert("Please enter email or phone number");
+    alert("Please enter email");
     return;
   }
 
   setCheckingUser(true);
-  console.log("Sending OTP to:", forgotValue);
-
   try {
-    // ✅ API to check user & send OTP
     await axios.post("http://127.0.0.1:8000/VJISS/send-otp/", {
       email: forgotValue,
-      
     });
-    console.log("OTP sent successfully");
-
 
     alert("OTP sent successfully");
 
-    setOtpSent(true);          // 👈 show OTP input
-    startOtpCountdown();       // 👈 start timer ONLY NOW
+    setOtpSent(true);
+    
+    setOtp("");
+    startOtpCountdown();
   } catch (err) {
     alert(err.response?.data?.error || "User not found");
   } finally {
     setCheckingUser(false);
   }
 };
+
 
 
 
@@ -180,7 +224,7 @@ const formatTime = (seconds) => {
 console.log("Login response:", response.data);
 
 console.log("Received token:", response.data.token);
-      login(response.data.token, response.data.role);
+      login(response.data.token, response.data.is_superuser,response.data.is_staff);
       
       alert("Login successful");
       setTimeout(() => {
@@ -199,20 +243,19 @@ navigate("/");
 const goBackToLogin = () => {
   clearInterval(timerRef.current);
   setShowForgot(false);
+  setOtpSent(false);
+  setOtp("");
+  setOtpExpired(false);
+  setTimeLeft(OTP_EXPIRY_SECONDS);
+  setResendDisabled(false);
 };
 
- const updatepassword = async () => {
-  if (!forgotValue) {
-    alert("Please enter email or phone number");
+
+const updatepassword = async () => {
+  if (otpExpired) {
+    alert("OTP expired. Please resend OTP.");
     return;
   }
-
-
-  if (otpExpired) {
-  alert("OTP expired. Please resend OTP.");
-  return;
-}
-
 
   if (newPassword.length < 6) {
     alert("Password must be at least 6 characters");
@@ -223,27 +266,24 @@ const goBackToLogin = () => {
     alert("Passwords do not match");
     return;
   }
-console.log("Updating password for:", forgotValue);
-  console.log("New password:", newPassword);
-    console.log("Confirm password:", confirmPassword);
+
   try {
-    await axios.put(
-      "http://127.0.0.1:8000/VJISS/update_password/",
-      {
-        email: forgotValue,
-        phone_number: forgotValue,
-        new_password: newPassword,
-        otp: otp
-      }
-    );
+    await axios.put("http://127.0.0.1:8000/VJISS/update_password/", {
+      email: forgotValue,
+      new_password: newPassword,
+      otp: otp,
+    });
 
     alert("Password updated successfully");
+
+    clearInterval(timerRef.current);
     setShowForgot(false);
     setForgotValue("");
+    setOtp("");
     setnewPassword("");
     setConfirmPassword("");
   } catch (err) {
-    alert(err.response?.data?.error || "Failed to update password");
+    alert("Invalid OTP or error updating password");
   }
 };
 
@@ -252,40 +292,39 @@ console.log("Updating password for:", forgotValue);
 
 
 
-  const handleSignUpSubmit = async (e) => {
+const handleSignUpSubmit = async (e) => {
   e.preventDefault();
-  setLoader(true);
 
-  console.log("Submitting payload:", formData);
+  if (!signupOtpSent) {
+    alert("Please send OTP first");
+    return;
+  }
+
+  if (!otp) {
+    alert("Please enter OTP");
+    return;
+  }
+
+  if (otpExpired) {
+    alert("OTP expired. Please resend OTP");
+    return;
+  }
 
   try {
     await axios.post(
       "http://127.0.0.1:8000/VJISS/create_user/",
-      formData
+      { ...formData, otp:otp }
     );
 
     alert("Registration successful!");
+    clearInterval(timerRef.current);
     setIsSignUpMode(false);
-    setFormData({
-      first_name: "",
-      last_name: "",
-      email: "",
-      phone_number: "", 
-      gender: "Male",
-      date_of_birth: "",
-      password: "",
-    });  
-
-
-
-
-  } catch (err) {
-    console.error("Signup error:", err.response?.data);
-    alert("Signup failed");
-  } finally {
-    setLoader(false);
+  } catch(e) {
+    console.error("Signup failed", e.response?.data || e.message);
+  alert(e.response?.data?.error || "Signup failed. Please try again.");
   }
 };
+
 
 
   return (
@@ -337,12 +376,20 @@ console.log("Updating password for:", forgotValue);
 
 
       {/* 🔹 Forgot password link */}
-      <p
-        style={{ cursor: "pointer", color: "#5995fd", fontSize: "14px" }}
-        onClick={() => {setShowForgot(true) }}
-      >
-        Forgot password?
-      </p>
+    <p
+  style={{ cursor: "pointer", color: "#5995fd", fontSize: "14px" }}
+  onClick={() => {
+    clearInterval(timerRef.current);
+    setShowForgot(true);
+    setOtp("");
+    setSignupOtpSent(false);
+    setOtpSent(false);
+    setOtpExpired(false);
+  }}
+>
+  Forgot password?
+</p>
+
 
       <input
         type="submit"
@@ -389,7 +436,7 @@ console.log("Updating password for:", forgotValue);
         type="number"
         placeholder={otpExpired ? "OTP Expired" : "Enter OTP"}
         value={otp}
-        onChange={(e) => setotp(e.target.value)}
+        onChange={(e) => setOtp(e.target.value)}
         disabled={otpExpired}
         required
       />
@@ -487,6 +534,43 @@ console.log("Updating password for:", forgotValue);
                 required
               />
             </div>
+ <div className="input-field">
+      <i className="fas fa-shield-alt"></i>
+<input
+  type="text"
+  inputMode="numeric"
+  maxLength={6}
+  placeholder={ "Enter OTP"}
+  value={otp}
+  onChange={(e) => setOtp(e.target.value)}
+  disabled={!signupOtpSent || otpExpired}
+/>
+
+
+
+</div>
+
+<button
+  type="button"
+  className="btn solid"
+  onClick={sendSignupOtp}
+>
+  Send OTP
+</button>
+{signupOtpSent && (
+  <p style={{ fontSize: "13px", color: otpExpired ? "red" : "#555" }}>
+    {otpExpired
+      ? "OTP expired"
+      : `OTP expires in ${formatTime(timeLeft)}`}
+  </p>
+)}
+
+
+   
+            
+           
+    
+
 
             <div className="input-field">
               <i className="fas fa-phone"></i>
@@ -499,6 +583,11 @@ console.log("Updating password for:", forgotValue);
                 required
               />
             </div>
+
+
+
+
+
 
             {/* Gender */}
            {/* Gender */}

@@ -1,5 +1,5 @@
 /* ================================
-   DESKTOP NAV ITEMS (li)
+   DESKTOP NAV ITEMS
 ================================ */
 
 .nav-links li {
@@ -10,13 +10,13 @@
   transition: color 0.3s ease;
 }
 
-/* Hover & Focus */
+/* Hover & Focus → ONLY color change */
 .nav-links li:hover,
 .nav-links li:focus-visible {
-  color: var(--primary);
+  color: var(--secondary);
 }
 
-/* Underline animation */
+/* Underline (hidden by default) */
 .nav-links li::after {
   content: "";
   position: absolute;
@@ -24,18 +24,24 @@
   bottom: -6px;
   width: 0%;
   height: 3px;
-  background: var(--secondary);
+  background: var(--primary);
   border-radius: 3px;
   transition: width 0.3s ease;
 }
 
-.nav-links li:hover::after,
-.nav-links li:focus-visible::after {
+/* ✅ ONLY ACTIVE PAGE SHOWS UNDERLINE */
+.nav-links li.active {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.nav-links li.active::after {
   width: 100%;
 }
 
+
 /* ================================
-   MOBILE MENU ITEMS (span)
+   MOBILE MENU ITEMS
 ================================ */
 
 .mobile-menu span {
@@ -46,32 +52,11 @@
   color: var(--dark);
 }
 
-/* Hover & Focus */
+/* Hover & Focus → background highlight only */
 .mobile-menu span:hover,
 .mobile-menu span:focus-visible {
   background: var(--light);
   color: var(--primary);
   padding-left: 20px;
   outline: none;
-}
-
-/* ================================
-   LOGIN / LOGOUT BUTTON FIX
-================================ */
-
-.logout-btn {
-  cursor: pointer;
-}
-
-/* ================================
-   OPTIONAL: ACTIVE PAGE STYLE
-================================ */
-
-.nav-links li.active {
-  color: var(--primary);
-  font-weight: 600;
-}
-
-.nav-links li.active::after {
-  width: 100%;
 }

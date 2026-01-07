@@ -6,6 +6,8 @@ import AuthPage from "./components/authentication/authpage";
 import Courses from "./components/courses/courses";
 import NavbarProvider from "./components/contexts/navbarContext";
 import AboutCompany from "./components/aboutCompany/aboutcompany";
+import InternshipOffers from "./components/internships/internships";
+import JobNotifications from "./components/jobNotifications/jobnotifications";
 
 function App() {
   const location = useLocation(); // ✅ SAFE now
@@ -21,6 +23,8 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/courses" element={<Courses />} />
         <Route path="/about" element={<AboutCompany/>}/>
+        <Route path ="/internship" element={<InternshipOffers/>}/>
+        <Route path ='/jobnotifications' element={<JobNotifications/>}/>
         <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>
       </NavbarProvider>

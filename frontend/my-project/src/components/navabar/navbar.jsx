@@ -34,7 +34,7 @@ const Navbar = () => {
   <li className={location.pathname === "/services" ? "active" : ""} onClick={() => goTo("/services")}>Services</li>
   <li className={location.pathname === "/courses" ? "active" : ""} onClick={() => goTo("/courses")}>Courses</li>
   <li className={location.pathname === "/internship" ? "active" : ""} onClick={() => goTo("/internship")}>Internship</li>
-  <li className={location.pathname === "/jobs" ? "active" : ""} onClick={() => goTo("/jobs")}>Job Notifications</li>
+  <li className={location.pathname === "/jobnotifications" ? "active" : ""} onClick={() => goTo("/jobnotifications")}>Job Notifications</li>
   <li className={location.pathname === "/trainers" ? "active" : ""} onClick={() => goTo("/trainers")}>Trainers Info</li>
   <li className={location.pathname === "/about" ? "active" : ""} onClick={() => goTo("/about")}>Contact</li>
 
@@ -65,7 +65,7 @@ const Navbar = () => {
   <span className={location.pathname === "/services" ? "active" : ""} onClick={() => goTo("/services")}>Services</span>
   <span className={location.pathname === "/courses" ? "active" : ""} onClick={() => goTo("/courses")}>Courses</span>
   <span className={location.pathname === "/internship" ? "active" : ""} onClick={() => goTo("/internship")}>Internship</span>
-  <span className={location.pathname === "/jobs" ? "active" : ""} onClick={() => goTo("/jobs")}>Job Notifications</span>
+  <span className={location.pathname === "/jobnotifications" ? "active" : ""} onClick={() => goTo("/jobnotifications")}>Job Notifications</span>
   <span className={location.pathname === "/trainers" ? "active" : ""} onClick={() => goTo("/trainers")}>Trainers Info</span>
   <span className={location.pathname === "/about" ? "active" : ""} onClick={() => goTo("/about")}>Contact</span>
 
