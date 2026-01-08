@@ -8,6 +8,7 @@ import NavbarProvider from "./components/contexts/navbarContext";
 import AboutCompany from "./components/aboutCompany/aboutcompany";
 import InternshipOffers from "./components/internships/internships";
 import JobNotifications from "./components/jobNotifications/jobnotifications";
+import Trainers from "./components/trainers/about_trainers";
 
 function App() {
   const location = useLocation(); // ✅ SAFE now
@@ -25,6 +26,7 @@ function App() {
         <Route path="/about" element={<AboutCompany/>}/>
         <Route path ="/internship" element={<InternshipOffers/>}/>
         <Route path ='/jobnotifications' element={<JobNotifications/>}/>
+        <Route path='/trainers' element={<Trainers/>}/>
         <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>
       </NavbarProvider>
