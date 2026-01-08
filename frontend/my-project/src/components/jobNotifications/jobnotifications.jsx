@@ -1,26 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 import "./jobNotifications.css";
 import api from "../apis/api";
 import Navbar from "../navabar/navbar";
+import { useNavigate } from "react-router-dom";
 
 const JobNotifications = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [error,setError]=useState("")
+const{token,logout}=useContext(AuthContext)
+const navigate=useNavigate()
 useEffect(() => {
+
+  
+
   const fetchJobs = async () => {
+    console.log("token",!token)
+     if (!token) {
+        logout();
+        navigate("/login");
+        return;
+      }
     try {
       const res = await api.get("/VJISS/job_notification_details/");
       setJobs(Array.isArray(res.data) ? res.data : []);
-    } catch (error) {
-      console.error("Failed to fetch jobs", error);
+    } catch (err) {
+      console.log("check",err.response?.status === 401)
+      if (err.response?.status === 401) {
+        console.log("status")
+          logout();
+          navigate("/login");
+        } else {
+          setError("Failed to load courses. Please try again later.");
+        }
+      
+
     } finally {
       setLoading(false);
     }
   };
 
   fetchJobs();
-}, []);
+}, [token,logout,navigate]);
 
 
   // ✅ NEW badge logic (20 days)
